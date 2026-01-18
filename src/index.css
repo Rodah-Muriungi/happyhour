@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== BASE STYLES ========== */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +10,306 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #0a0a0f;
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* ========== CUSTOM SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 15, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ff3366, #8a2be2);
+  border-radius: 5px;
+  border: 2px solid rgba(10, 10, 15, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ff3366, #00e6cc);
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff3366 #0a0a0f;
+}
+
+/* ========== TEXT SELECTION ========== */
+::selection {
+  background-color: rgba(255, 51, 102, 0.5);
+  color: white;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+::-moz-selection {
+  background-color: rgba(255, 51, 102, 0.5);
+  color: white;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* ========== SMOOTH TRANSITIONS ========== */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ========== CUSTOM ANIMATIONS ========== */
+@keyframes happy-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  10% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.1);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0);
+  }
+  50% {
+    transform: translateY(-10px) translateX(2px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 51, 102, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+  }
+}
+
+@keyframes pulse-line {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ========== ANIMATION CLASSES ========== */
+.animate-happy-pulse {
+  animation: happy-pulse 2s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-pulse-line {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 51, 102, 0.8), 
+    transparent);
+  background-size: 200% 100%;
+  animation: pulse-line 3s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 51, 102, 0) 0%,
+    rgba(255, 51, 102, 0.2) 50%,
+    rgba(255, 51, 102, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+/* ========== CUSTOM UTILITIES ========== */
+@layer utilities {
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-happy-pulse via-happy-teal to-happy-purple;
+  }
+  
+  /* Glass morphism effect */
+  .glass {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-md bg-black/30 border border-white/10;
+  }
+  
+  /* Pulse border */
+  .pulse-border {
+    @apply border-2 border-happy-pulse;
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  /* Heartbeat line */
+  .heartbeat-line {
+    @apply h-1 bg-gradient-to-r from-transparent via-happy-pulse to-transparent;
+    animation: pulse-line 2s linear infinite;
+  }
+  
+  /* Happy button styles */
+  .happy-btn {
+    @apply bg-gradient-to-r from-happy-pulse to-happy-purple text-white px-6 py-3 rounded-full font-semibold 
+           shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 
+           active:translate-y-0 hover:scale-105 active:scale-100
+           focus:outline-none focus:ring-2 focus:ring-happy-pulse focus:ring-offset-2 focus:ring-offset-happy-dark;
+  }
+  
+  .happy-btn-secondary {
+    @apply bg-gradient-to-r from-happy-teal to-cyan-500 text-white px-6 py-3 rounded-full font-semibold 
+           shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  /* Happy input styles */
+  .happy-input {
+    @apply bg-gray-900/50 border-2 border-happy-pulse/30 rounded-2xl text-white placeholder-gray-400 
+           focus:outline-none focus:border-happy-pulse focus:ring-2 focus:ring-happy-pulse/30 
+           transition-all duration-300;
+  }
+  
+  /* Card styles */
+  .happy-card {
+    @apply bg-happy-bg/80 backdrop-blur-lg rounded-2xl border border-happy-pulse/20 
+           shadow-2xl hover:shadow-happy-pulse/10 transition-shadow duration-300;
+  }
+  
+  /* Pulse dot indicator */
+  .pulse-dot {
+    @apply w-3 h-3 bg-happy-pulse rounded-full;
+    animation: happy-pulse 1.5s ease-in-out infinite;
+  }
+  
+  /* Live pulse indicator */
+  .live-pulse {
+    @apply relative;
+  }
+  
+  .live-pulse::after {
+    content: '';
+    @apply absolute top-0 right-0 w-3 h-3 bg-happy-pulse rounded-full;
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+}
+
+/* ========== SCROLL SNAP ========== */
+.scroll-snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.scroll-snap-start {
+  scroll-snap-align: start;
+}
+
+/* ========== LOADING STATES ========== */
+.loading-pulse {
+  @apply bg-gradient-to-r from-happy-pulse/20 via-happy-teal/20 to-happy-purple/20;
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* ========== RESPONSIVE TYPOGRAPHY ========== */
+@layer base {
+  h1 {
+    @apply text-4xl md:text-5xl font-bold;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+  
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+/* ========== FOCUS VISIBILITY ========== */
+.focus-visible {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-happy-pulse focus-visible:ring-offset-2;
+}
+
+/* ========== DARK MODE ENFORCEMENT ========== */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #0a0a0f;
+    color: #ffffff;
+  }
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none;
+  }
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,20 +1,115 @@
+/* ========== HAPPYHOUR APP.CSS ========== */
+/* Heartbeat-inspired styling for HappyHour app */
+
 .App {
   text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0f 0%, #12121f 50%, #1a1a2e 100%);
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Animated heartbeat lines in background */
+.App::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 60px,
+    rgba(255, 51, 102, 0.03) 60px,
+    rgba(255, 51, 102, 0.03) 120px
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: pulse-line 20s linear infinite;
+}
+
+.App::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 51, 102, 0.07) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0, 230, 204, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(138, 43, 226, 0.04) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Heartbeat Logo */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    #ff3366 0%,
+    #ff6b9d 25%,
+    #8a2be2 50%,
+    #00e6cc 75%,
+    #ff3366 100%
+  );
+  padding: 10px;
+  box-shadow: 0 0 40px rgba(255, 51, 102, 0.5), 0 0 80px rgba(138, 43, 226, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.App-logo::before {
+  content: "✨";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15vmin;
+  color: white;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
+.App-logo::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: logo-shine 3s linear infinite;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: heartbeat-logo 2s ease-in-out infinite;
   }
 }
 
+/* App Header - Updated for HappyHour */
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,12 +117,104 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  background: rgba(10, 10, 15, 0.4);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 51, 102, 0.2);
 }
 
+/* App Link - Updated */
 .App-link {
-  color: #61dafb;
+  color: #ff3366;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  border-radius: 50px;
+  background: rgba(255, 51, 102, 0.1);
+  border: 2px solid rgba(255, 51, 102, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
+.App-link:hover {
+  color: white;
+  background: rgba(255, 51, 102, 0.3);
+  border-color: rgba(255, 51, 102, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 51, 102, 0.4);
+}
+
+.App-link::after {
+  content: " →";
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.App-link:hover::after {
+  opacity: 1;
+}
+
+/* Welcome Text */
+.welcome-text {
+  margin-top: 2rem;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.welcome-text h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #ff3366, #00e6cc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+}
+
+/* Pulse Animation */
+.pulse-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 1rem;
+}
+
+.pulse-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff3366, #00e6cc);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.pulse-node:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulse-node:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.pulse-node:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.pulse-node:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+/* ========== ANIMATIONS ========== */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +222,138 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes heartbeat-logo {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 40px rgba(255, 51, 102, 0.5),
+      0 0 80px rgba(138, 43, 226, 0.3);
+  }
+  5%,
+  15% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(255, 51, 102, 0.6),
+      0 0 100px rgba(138, 43, 226, 0.4);
+  }
+  10%,
+  20% {
+    transform: scale(1);
+    box-shadow: 0 0 40px rgba(255, 51, 102, 0.5),
+      0 0 80px rgba(138, 43, 226, 0.3);
+  }
+}
+
+@keyframes pulse-line {
+  0% {
+    background-position: 0px 0;
+  }
+  100% {
+    background-position: 120px 0;
+  }
+}
+
+@keyframes logo-shine {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.8);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  .App-logo {
+    height: 30vmin;
+  }
+
+  .welcome-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .App-header {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-logo {
+    height: 25vmin;
+  }
+
+  .welcome-text h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-text p {
+    font-size: 1rem;
+  }
+
+  .pulse-demo {
+    flex-wrap: wrap;
+  }
+}
+
+/* ========== LOADING STATE ========== */
+.App-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 15, 0.9);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.loading-pulse {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading-pulse span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3366;
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+.loading-pulse span:nth-child(2) {
+  animation-delay: 0.2s;
+  background: #00e6cc;
+}
+
+.loading-pulse span:nth-child(3) {
+  animation-delay: 0.4s;
+  background: #8a2be2;
 }
